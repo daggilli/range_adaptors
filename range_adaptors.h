@@ -2,19 +2,26 @@
 #define __RANGE_ADAPTORS_H__
 #include <ranges>
 
-struct drop_last_t : std::ranges::range_adaptor_closure<drop_last_t> {
+struct drop_last_n_t : std::ranges::range_adaptor_closure<drop_last_n_t> {
   std::size_t len;
 
-  constexpr drop_last_t(std::size_t len) : len(len){};
+  constexpr drop_last_n_t(std::size_t len) : len(len){};
 
-  template <std::ranges::sized_range R>
-  requires std::ranges::viewable_range<R>
+  template <std::ranges::viewable_range R>
   auto operator()(R&& r) const {
-    auto n = std::ranges::size(r);
-    return std::views::take(std::forward<R>(r), n > len ? n - len : 0);
+    if constexpr (std::ranges::sized_range<R>) {
+      auto n = std::ranges::size(r);
+      return std::views::take(std::forward<R>(r), n > len ? n - len : 0);
+    } else {
+      auto head = std::ranges::begin(r);
+      auto tail = std::ranges::end(r);
+      auto n = std::ranges::distance(head, tail);
+      auto ntail = std::ranges::next(head, n > len ? n - len : 0, tail);
+      return std::ranges::subrange(std::move(head), std::move(ntail));
+    }
   }
 };
-constexpr inline auto drop_last(std::size_t len = 1) { return drop_last_t{len}; };
+constexpr inline auto drop_last_n(std::size_t len = 1) { return drop_last_n_t{len}; };
 
 struct drop_two_sided_t : std::ranges::range_adaptor_closure<drop_two_sided_t> {
   std::size_t front, back;

@@ -7,7 +7,7 @@ using namespace std::string_literals;
 int main() {
   auto s{"0123456789"s};
 
-  auto dl = s | drop_last(6) | std::ranges::to<std::string>();
+  auto dl = s | drop_last_n(6) | std::ranges::to<std::string>();
   std::cout << "|" << dl << "|\n";
 
   auto sn{"0123456789"s};
@@ -67,5 +67,28 @@ int main() {
   }
   std::cout << "|\n";
 
+  auto irngdln = irng | drop_last_n(3);
+  std::cout << "|";
+  sep = "";
+
+  for (int i : irngdln) {
+    std::cout << sep << i;
+    sep = " "s;
+  }
+  std::cout << "|\n";
+
+  irngdln = irng | drop_last_n(23);
+  std::cout << "|";
+  sep = "";
+
+  for (int i : irngdln) {
+    std::cout << sep << i;
+    sep = " "s;
+  }
+  std::cout << "|\n";
+
+  auto szr = std::views::counted(irng.begin(), std::ranges::distance(irng));
+
+  std::cout << szr.size() << "\n";
   return 0;
 }
