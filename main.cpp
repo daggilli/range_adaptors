@@ -1,13 +1,16 @@
+// g++ -std=c++23 main.cpp -o range_adaptors
 #include <iostream>
 
-using namespace std::string_literals;
-
 #include "range_adaptors.h"
+
+using namespace std::string_literals;
 
 int main() {
   auto s{"0123456789"s};
 
-  auto dl = s | drop_last_n(6) | std::ranges::to<std::string>();
+  auto dln = s | drop_last_n(6) | std::ranges::to<std::string>();
+  std::cout << "|" << dln << "|\n";
+  auto dl = s | drop_last | std::ranges::to<std::string>();
   std::cout << "|" << dl << "|\n";
 
   auto sn{"0123456789"s};

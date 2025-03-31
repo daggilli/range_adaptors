@@ -21,7 +21,12 @@ struct drop_last_n_t : std::ranges::range_adaptor_closure<drop_last_n_t> {
     }
   }
 };
-constexpr inline auto drop_last_n(std::size_t len = 1) { return drop_last_n_t{len}; };
+inline constexpr auto drop_last_n(std::size_t len) { return drop_last_n_t{len}; };
+
+struct drop_last_t : drop_last_n_t {
+  constexpr drop_last_t() : drop_last_n_t{1} {};
+};
+inline constexpr drop_last_t drop_last;
 
 struct drop_two_sided_t : std::ranges::range_adaptor_closure<drop_two_sided_t> {
   std::size_t front, back;
@@ -44,7 +49,7 @@ struct drop_two_sided_t : std::ranges::range_adaptor_closure<drop_two_sided_t> {
     }
   }
 };
-constexpr inline auto drop_two_sided(std::size_t front, std::size_t back) { return drop_two_sided_t{front, back}; }
+inline constexpr auto drop_two_sided(std::size_t front, std::size_t back) { return drop_two_sided_t{front, back}; }
 
 struct substr_t : std::ranges::range_adaptor_closure<substr_t> {
   std::size_t start, len;
@@ -66,6 +71,6 @@ struct substr_t : std::ranges::range_adaptor_closure<substr_t> {
     }
   };
 };
-constexpr inline auto substr(std::size_t start, std::size_t len) { return substr_t{start, len}; }
+inline constexpr auto substr(std::size_t start, std::size_t len) { return substr_t{start, len}; }
 
 #endif
