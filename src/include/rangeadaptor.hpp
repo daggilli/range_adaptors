@@ -16,7 +16,7 @@ namespace RangeAdaptor {
       } else {
         auto head = std::ranges::begin(r);
         auto tail = std::ranges::end(r);
-        auto n = std::ranges::distance(head, tail);
+        auto n = static_cast<std::size_t>(std::ranges::distance(head, tail));
         auto ntail = std::ranges::next(head, n > len ? n - len : 0, tail);
         return std::ranges::subrange(std::move(head), std::move(ntail));
       }
