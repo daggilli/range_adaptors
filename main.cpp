@@ -6,9 +6,8 @@
 #include "range_adaptors.h"
 
 using namespace std::string_literals;
-using namespace RangeAdaptor;
 
-void dropit(const std::vector<int> &v, const struct drop_last_t &d) {
+void dropit(const std::vector<int> &v, const struct RangeAdaptor::drop_last_t &d) {
   auto dv = v | d | std::ranges::to<std::vector<int>>();
   for (auto &e : v) {
     std::cout << e << " ";
@@ -22,21 +21,21 @@ int main() {
   // fully qualified with namespace
   auto dln = s | RangeAdaptor::drop_last_n(6) | std::ranges::to<std::string>();
   std::cout << "|" << dln << "|\n";
-  auto dl = s | drop_last | std::ranges::to<std::string>();
+  auto dl = s | RangeAdaptor::drop_last | std::ranges::to<std::string>();
   std::cout << "|" << dl << "|\n";
-  auto dd = drop_last_t();
+  auto dd = RangeAdaptor::drop_last_t();
   auto dldd = s | dd | std::ranges::to<std::string>();
   std::cout << "|" << dldd << "|\n";
 
   auto sn{"0123456789"s};
 
-  auto sndts = sn | drop_two_sided(2, 3) | std::ranges::to<std::string>();
+  auto sndts = sn | RangeAdaptor::drop_two_sided(2, 3) | std::ranges::to<std::string>();
   std::cout << "|" << sndts << "|\n";
-  sndts = sn | drop_two_sided(12, 3) | std::ranges::to<std::string>();
+  sndts = sn | RangeAdaptor::drop_two_sided(12, 3) | std::ranges::to<std::string>();
   std::cout << "|" << sndts << "|\n";
 
   auto vi = std::vector<int>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-  dropit(vi, drop_last);
+  dropit(vi, RangeAdaptor::drop_last);
 
   auto irng = std::views::iota(0) | std::views::take(20);
   for (int i : irng) {
@@ -44,7 +43,7 @@ int main() {
   }
   std::cout << "\n";
 
-  auto irngdts = irng | drop_two_sided(2, 3);
+  auto irngdts = irng | RangeAdaptor::drop_two_sided(2, 3);
 
   std::cout << "|";
   auto sep{""s};
@@ -55,7 +54,7 @@ int main() {
   }
   std::cout << "|\n";
 
-  irngdts = irng | drop_two_sided(22, 3);
+  irngdts = irng | RangeAdaptor::drop_two_sided(22, 3);
 
   std::cout << "|";
   sep = "";
@@ -66,7 +65,7 @@ int main() {
   }
   std::cout << "|\n";
 
-  irngdts = irng | substr(3, 7);
+  irngdts = irng | RangeAdaptor::substr(3, 7);
 
   std::cout << "|";
   sep = "";
@@ -77,7 +76,7 @@ int main() {
   }
   std::cout << "|\n";
 
-  irngdts = irng | substr(23, 7);
+  irngdts = irng | RangeAdaptor::substr(23, 7);
 
   std::cout << "|";
   sep = "";
@@ -88,7 +87,7 @@ int main() {
   }
   std::cout << "|\n";
 
-  auto irngdln = irng | drop_last_n(3);
+  auto irngdln = irng | RangeAdaptor::drop_last_n(3);
   std::cout << "|";
   sep = "";
 
@@ -98,7 +97,7 @@ int main() {
   }
   std::cout << "|\n";
 
-  irngdln = irng | drop_last_n(23);
+  irngdln = irng | RangeAdaptor::drop_last_n(23);
   std::cout << "|";
   sep = "";
 
