@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project("RangeAdaptor" LANGUAGES CXX VERSION 0.0.1
+project("rangeadaptor" LANGUAGES CXX VERSION 0.0.1
   DESCRIPTION "C++ range adaptors to manipulate heads and tails of containers")
 add_compile_options(-std=c++26 -Wall -Wunused -Wnrvo)
 
